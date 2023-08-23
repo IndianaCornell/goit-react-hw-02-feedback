@@ -36,7 +36,6 @@ export class App extends Component {
   }
 
   render() {
-    const options = ['good', 'neutral', 'bad'];
     return (
       <Layout>
         <Card>
