@@ -10,30 +10,29 @@ import { Section } from './Sections/Section';
 
 export class App extends Component {
   state = {
-    good: 1,
+    good: 0,
     neutral: 0,
     bad: 0,
-    total: 0,
-    positiveFeedbackPercentage: 4,
   };
 
   handleFeedback = option => {
     this.setState(prevState => {
       return {
         [option]: prevState[option] + 1,
-        total: prevState.total + 1,
       };
     });
   };
 
   countTotalFeedback() {
-    return this.state.total;
+    let total = 0;
+    total = this.state.good + this.state.neutral + this.state.bad;
+    return total;
   }
 
   countPositiveFeedbackPercentage() {
-    return this.state.total === 0
+    return this.countTotalFeedback() === 0
       ? 0
-      : ((this.state.good / this.state.total) * 100).toFixed(1);
+      : ((this.state.good / this.countTotalFeedback()) * 100).toFixed(1);
   }
 
   render() {
@@ -44,7 +43,7 @@ export class App extends Component {
           <Section title="Please leave feedback">
             <FeedbackOptions
               clickFeedback={this.handleFeedback}
-              options={options}
+              options={Object.keys(this.state)}
             />
           </Section>
           <Section title="Statistics">
